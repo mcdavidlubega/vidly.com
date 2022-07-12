@@ -1,0 +1,21 @@
+{
+  "name": "vidly.com",
+  "version": "1.0.0",
+  "description": "An imaginary video rental service for learning puporses",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "main"
+  },
+  "author": "McDavid Lubega",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.1",
+    "joi": "^13.1.0",
+    "nodemon": "^2.0.19"
+  }
+}
