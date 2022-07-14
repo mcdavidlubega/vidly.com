@@ -1,8 +1,7 @@
 const { application } = require('express');
 const express = require('express');
-const Joi = require('joi');
 const router = express.Router();
-
+const validateInput = require('../helpers/routesValidateInput');
 const genres = [
   {
     id: 1,
@@ -27,6 +26,18 @@ router.get('/', (req, res) => {
   res.json(genres);
 });
 
+// Get A Specific Genres
+router.get('/:id', (req, res) => {
+  const getGenre = genres.find((q) => q.id === parseInt(req.params.id, 10));
+  const { error } = validateInput(req.body);
+  if (error) req.status(401).send(error.details[0].message);
+  if (!error) {
+    res.json(getGenre);
+  }
+
+  res.json(getGenres);
+});
+
 //Post a Genre
 router.post('/', (req, res) => {
   const error = validateInput(req.body);
@@ -42,7 +53,7 @@ router.post('/', (req, res) => {
   }
 });
 //Update a Genere
-router.put('//:id', (req, res) => {
+router.put('/:id', (req, res) => {
   const error = validateInput(req.body);
   if (error) res.status(400).send(error.details[0].message);
   if (!error) {
@@ -56,22 +67,10 @@ router.put('//:id', (req, res) => {
 });
 
 //Delete a Genre
-router.delete('//:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   const deleteGenre = genres.findIndex((g) => g.id === parseInt(req.params.id));
   genres.splice(deleteGenre, 1);
   res.json(genres);
 });
-
-//Joi validation function
-function validateInput(genre) {
-  const schema = {
-    id: Joi.number(),
-    genre: Joi.string().min(3).required(),
-  };
-
-  const { error } = Joi.validate(genre, schema);
-
-  return error;
-}
 
 module.exports = router;
