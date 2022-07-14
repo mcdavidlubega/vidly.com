@@ -1,10 +1,8 @@
-const { json } = require('express');
 const express = require('express');
-
-const Joi = require('joi');
 const genres = require('./routes/genres');
 const home = require('./routes/home');
 const app = express();
+
 app.use(express.json());
 app.use('/genres', genres);
 app.use('/', home);
